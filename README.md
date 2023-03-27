@@ -18,10 +18,19 @@ The program needs to read a cuantity of samples between 500 and 1000. And comple
 
 ## Methodology
 The voltage is going to be given by a signal generator, in specific a sine wave with a positive voltage of 1.5V and negative voltage of -1.5V, that means an amplitude of 3V. Now, the BBB can't read negative voltage, so the next part is eliminate that and reduce the amplitud voltage from 0 to 1.8V. So, it is necessary to use OPAMPs (Operatinal Amplifiers) with the next configuration.
+![](./Diagrama.jpg)
 
 The CI (Circuit Integrat) for this experimet is LM324N, it is a CI with 4 OPAMPs.
+![](./Armado.jpg)
 
 Then, we have to add one AA battery to move the offset of the signal to the positive voltage with the next configuration. The values of the resistors are 1k Ohms (6), 2k Ohnms (1) and 4k Ohms (1).
+![](./Conexiones.jpg)
+
+Those were the values of the signal generator:
+![](./Generador.jpg)
+
+And this is the final signal that was going to be read by the ADC:
+![](./Osciloscopio.jpg)
 
 ## Program
 To obtain the minimum value the program reads the signal in one specific time, then another sample, if the new value of the sample is lower than the actual, the variable of the minimum value is replaced with the new one, and it is going to be repeated until the max cuantity of samples is reached.
@@ -32,11 +41,18 @@ The mean value is obtained dividing the sum of all values in a data set by the n
 
 To obtain the median is necessary to order the values from the lowest to the highest value. Then we pick the value that is in the middle of all the samples values.
 
-Now, the way to obtain the RMS value is with this formula:
-*
-Calculate the square root of the sum of all squared values divided by the number os samples.
+Now, the way to obtain the rms value is calculating the square root of the sum of all squared values divided by the number os samples.
 
 The histogram is a little graphic that shows all the sample values divided in differents ranges. There are 16 different ranges in total, so, the range number 1 starts with 0 and finishes with 255, then to the next range just add 256 to the minimum and maximum value of the range, and continue doing that until you arrive to 4095. If a value enters in one specefic range, the histogram shows it with a `x`.
+
+## Results
+In this case, the cuantities of samples tested were 500 and 700, the first one is shown in the next image:
+![](./500_samples.jpg)
+
+And 700 samples:
+![](./700samples.jpg)
+
+As you can see, the values of the samples are not near of the minimum and maximum values, because the final signal was conditioned to not be 0 nor 4095, otherwise, the ADC could be affected.
 
 ## How to use the C program
 If you want to execute the C program, it is necessary to install the `gcc` compiler. Use the next command:
