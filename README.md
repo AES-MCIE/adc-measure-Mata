@@ -6,7 +6,7 @@ Implement the next Data logger for the adc using C to program the function to co
 ## Introduction
 An ADC (Analog-Digital-Converter) is an electronic part or device that can process a variable signal, and convert that signal in data that can be understood by a computer. In other words, a voltage in a specific range can be interpreted in binary information, in the case of Beaglebone Black the voltage range is 0 - 1.8V, and the data range is 0 - 4095, 12 bits of data.
 
-##Requirements
+## Requirements
 The program needs to read a cuantity of samples between 500 and 1000. And complete the next:
 
 1. Minimum value
@@ -16,14 +16,14 @@ The program needs to read a cuantity of samples between 500 and 1000. And comple
 5. RMS value
 6. Histogram
 
-##Methodology
+## Methodology
 The voltage is going to be given by a signal generator, in specific a sine wave with a positive voltage of 1.5V and negative voltage of -1.5V, that means an amplitude of 3V. Now, the BBB can't read negative voltage, so the next part is eliminate that and reduce the amplitud voltage from 0 to 1.8V. So, it is necessary to use OPAMPs (Operatinal Amplifiers) with the next configuration.
 
 The CI (Circuit Integrat) for this experimet is LM324N, it is a CI with 4 OPAMPs.
 
 Then, we have to add one AA battery to move the offset of the signal to the positive voltage with the next configuration. The values of the resistors are 1k Ohms (6), 2k Ohnms (1) and 4k Ohms (1).
 
-##Program
+## Program
 To obtain the minimum value the program reads the signal in one specific time, then another sample, if the new value of the sample is lower than the actual, the variable of the minimum value is replaced with the new one, and it is going to be repeated until the max cuantity of samples is reached.
 
 To obtain the maximum valur is the same way as the minimum, with this difference: the variable of the maximum value is going to be replaced only if the new sample value is bigger than the actual.
@@ -38,7 +38,7 @@ Calculate the square root of the sum of all squared values divided by the number
 
 The histogram is a little graphic that shows all the sample values divided in differents ranges. There are 16 different ranges in total, so, the range number 1 starts with 0 and finishes with 255, then to the next range just add 256 to the minimum and maximum value of the range, and continue doing that until you arrive to 4095. If a value enters in one specefic range, the histogram shows it with a `x`.
 
-##How to use the C program
+## How to use the C program
 If you want to execute the C program, it is necessary to install the `gcc` compiler. Use the next command:
 ```
 sudo apt-get install gcc
