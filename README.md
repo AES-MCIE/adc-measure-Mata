@@ -18,18 +18,25 @@ The program needs to read a cuantity of samples between 500 and 1000. And comple
 
 ## Methodology
 The voltage is going to be given by a signal generator, in specific a sine wave with a positive voltage of 1.5V and negative voltage of -1.5V, that means an amplitude of 3V. Now, the BBB can't read negative voltage, so the next part is eliminate that and reduce the amplitud voltage from 0 to 1.8V. So, it is necessary to use OPAMPs (Operatinal Amplifiers) with the next configuration.
+
 ![](./Diagrama.jpg)
 
+## Connections
 The CI (Circuit Integrat) for this experimet is LM324N, it is a CI with 4 OPAMPs.
+
 ![](./Armado.jpg)
 
 Then, we have to add one AA battery to move the offset of the signal to the positive voltage with the next configuration. The values of the resistors are 1k Ohms (6), 2k Ohnms (1) and 4k Ohms (1).
+
 ![](./Conexiones.jpg)
 
+## Equipment
 Those were the values of the signal generator:
+
 ![](./Generador.jpg)
 
 And this is the final signal that was going to be read by the ADC:
+
 ![](./Osciloscopio.jpg)
 
 ## Program
