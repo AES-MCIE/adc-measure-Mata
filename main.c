@@ -36,7 +36,12 @@ int samples[1000];
 int sorted_data[1000];
 int aux = 0;
 int half = 0;
-
+float v_min = 0;
+float v_max = 0;
+float v_mean = 0;
+float v_median = 0;
+float v_rms = 0;
+char help[4]="help";
 
 void sorting(){
 	for (int i=0; i < n; i++){
@@ -53,9 +58,12 @@ void sorting(){
 	}
 	half = n/2;
 	median = sorted_data[half];
+	v_median = median*1.8;
+	v_median = v_median/4095;
 	printf("\n");
 	printf("The median value is: ");
-	printf("%i", median);
+	printf("%f", v_median);
+	printf("V.");
 }
 
 void mean_value(){
@@ -67,10 +75,13 @@ void mean_value(){
 			mean = mean / (i+1);
 		}
 	}
+	v_mean = mean*1.8;
+	v_mean = v_mean/4095;
 	printf("\nThe number of samples is: ");
 	printf("%i", n);
 	printf("\nThe mean value is: ");
-	printf("%i", mean);
+	printf("%f", v_mean);
+	printf("V.");
 }
 
 void calculate_rms(){
@@ -81,9 +92,12 @@ void calculate_rms(){
 	}
 	sum_rms = sum_rms/n;
 	rms = sqrt(sum_rms);
+	v_rms = rms*1.8;
+	v_rms = v_rms/4095;
 	printf("\n");
 	printf("The rms value is: ");
-	printf("%i", rms);
+	printf("%f", v_rms);
+	printf("V.");
 }
 
 void histogram(){
@@ -136,10 +150,33 @@ int main(int argc, char *argv[]){
 
 	if(argc !=2){
 		printf("Arguments are: %d\n", argc);
-		printf("the command is used: adc-meas n\n");
+		printf("the command is used: ./adc-meas n\n");
 		printf("n is the number of measurements, it must be between 500 - 1,000\n");
-		return 2;
+	return 2;
 	}
+
+	if(argv[1][0] == 'h' && argv[1][1] == 'e' && argv[1][2]=='l' && argv[1][3]=='p'){
+		printf("How to use the ADC program in C:");
+		printf("\nThe function of this program is to read an analog signal in the ADC0 of the BBB.");
+		printf("\nThe ADC ping for this case is the ADC0, so you have to connect the signal with this pin");
+		printf("\nand the GND pin with the GND of the circuit");
+		printf("\n\nTo compile this C program, you have to download the compiler gcc:");
+		printf("\nsudo apt-get install gcc");
+		printf("\n\nThen compile the C program to create a new archive to execute the code, the recommended name is:");
+		printf("\ngcc main.c -o adc-meas -lm");
+		printf("\n\nFinally, just execute the new archive with a command with the cuantity of samples.");
+		printf("\nThat must be between 500 and 1000 samples.");
+		printf("\n\n./adc-meas 500");
+		printf("\n\nFor more information, please visit: https://github.com/AES-MCIE/adc-measures-Mata");
+		return 2;
+	} 
+	
+	//if(argc != 2){
+	//	printf("Arguments are: %d\n, argc");
+	//	printf("the command is used: ./adc-meas n\n");
+	//	printf("n is the number of measurements, it must be between 500 - 1000\n");
+	//	return 2;
+	//}
 
 	n = (int) strtol(argv[1],NULL,10);
 	
@@ -170,10 +207,17 @@ int main(int argc, char *argv[]){
 			sleep(0.005);
 		}
 		
+		v_min = minimum * 1.8;
+		v_min = v_min/4095;
+		v_max = maximum * 1.8;
+		v_max = v_max/4095;
+
 		printf("The maximum value is: ");
-		printf("%i", maximum);
+		printf("%f", v_max);
+		printf("V.");
 		printf("\nThe minimum value is: ");
-		printf("%i", minimum);
+		printf("%f", v_min);
+		printf("V.");
 		mean_value();
 		sorting();
 		calculate_rms();
@@ -183,3 +227,4 @@ int main(int argc, char *argv[]){
 		return 0;
 	}
 }
+

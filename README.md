@@ -78,3 +78,8 @@ The final part is to execute the program with the name of the new archive and a 
 ./adc-meas 500
 ````
 
+## Help
+If you want to know jow to use this program while using the terminal, just use the next command:
+```
+./adc-meas help
+```
